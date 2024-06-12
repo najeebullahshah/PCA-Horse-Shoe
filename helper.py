@@ -288,7 +288,7 @@ class Helper():
         fig = plt.savefig('./figures/simulated_dataset_a_horse_shoe'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
-    def generateBlockDatasetsFigures(self):
+    def generateSupplementaryFigure1(self):
         plt.imshow(self.simulatedDatasetBlock, cmap=plt.cm.Reds)
         plt.xlabel('Cells',fontsize=12)
         plt.ylabel('Genes',fontsize=12, rotation=90)
@@ -309,7 +309,7 @@ class Helper():
         fig = plt.savefig('./figures/pca_four_cells'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
-    def generateSupplementaryFigure3(self):
+    def generateSupplementaryFigure2(self):
         plt.imshow(self.simulatedDatasetB, cmap=plt.cm.Reds)
         plt.xlabel('Cells',fontsize=12)
         plt.ylabel('Genes',fontsize=12, rotation=90)
@@ -547,7 +547,7 @@ class Helper():
         fig = plt.savefig('./figures/liver_dataset_eigenfunction2'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
-    def generateSupplementaryFigure4(self):
+    def generateSupplementaryFigure3(self):
         i = 0
         distDictionary = {}
         for sampleI in self.simulatedDatasetA.T:
@@ -608,7 +608,7 @@ class Helper():
         fig = plt.savefig('./figures/saturation_dist_simulated_datasetA_noSat'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
-    def generateSupplementaryFigure5(self):
+    def generateSupplementaryFigure4(self):
         cl = CLPCG()
         cl.fit(self.X_reduced_human[:,0], self.X_reduced_human[:,1], e_max = 5.9)
         fig, ax = plt.subplots()
@@ -630,7 +630,7 @@ class Helper():
         fig = plt.savefig('./figures/best_fit_clpcg_pc_with_human'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
-    def generateSupplementaryFigure6(self):
+    def generateSupplementaryFigure5(self):
         im = plt.imshow(self.simulatedDatasetANoSat2, cmap=plt.cm.Reds)
         plt.xlabel('Cells',fontsize=15)
         plt.ylabel('Genes',fontsize=15, rotation=90)
@@ -660,7 +660,7 @@ class Helper():
         fig = plt.savefig('./figures/saturation_dist_simulated_datasetA_noSat20B'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
-    def generateSupplementaryFigure7(self):
+    def generateSupplementaryFigure6(self):
         y1 = [-np.sin(3.67*((x/50)-1/2)) for x in range(50)]
         plt.plot([x/50 for x in range(50)], y1)
         plt.ylabel('Eigen vector 1 values',fontsize=15)
@@ -683,7 +683,7 @@ class Helper():
         fig = plt.savefig('./figures/model_horse_shoe'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
-    def generateSupplementaryFigure8(self):
+    def generateSupplementaryFigure7(self):
         plt.plot([x/10 for x in range(10)], self.X_reduced_DSA_noSat1[:,0])
         plt.xlabel('Normalized Sample Indexes',fontsize=15)
         plt.ylabel('PCA1 values',fontsize=15)
@@ -720,7 +720,7 @@ class Helper():
         fig = plt.savefig('./figures/noSatB_horse_shoe'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
-    def generateSupplementaryFigure9(self):
+    def generateSupplementaryFigure8(self):
         plt.scatter(self.X_reduced_human[:,0], self.X_reduced_human[:,1], s = 5)
         plt.xlabel('PCA1',fontsize=15)
         plt.ylabel('PCA2',fontsize=15)
@@ -760,6 +760,45 @@ class Helper():
         fig = plt.savefig('./figures/pca34'+self.imgType, dpi=600, bbox_inches='tight')
         plt.close(fig)
         
+    def generateSupplementaryFigure9(self):
+        pca = PCA(n_components=200)
+        pca.fit(self.X_human)
+        
+        # Explained variance ratio and cumulative explained variance
+        explained_variance_ratio = pca.explained_variance_ratio_
+        cumulative_explained_variance = np.cumsum(explained_variance_ratio)
+        plt.plot(range(1, len(cumulative_explained_variance) + 1), cumulative_explained_variance, marker='o', linestyle='-')
+        plt.xlabel('Number of Principal Components', fontsize=15)
+        plt.ylabel('Cumulative Explained Variance (%)', fontsize=15)
+        fig = plt.savefig('./figures/pcaSaturationHuman'+self.imgType, dpi=600, bbox_inches='tight')
+        plt.close(fig)
+        
+        pca = PCA(n_components=200)
+        pca.fit(self.X_liver)
+        
+        # Explained variance ratio and cumulative explained variance
+        explained_variance_ratio = pca.explained_variance_ratio_
+        cumulative_explained_variance = np.cumsum(explained_variance_ratio)
+        plt.plot(range(1, len(cumulative_explained_variance) + 1), cumulative_explained_variance, marker='o', linestyle='-')
+        plt.xlabel('Number of Principal Components', fontsize=15)
+        plt.ylabel('Cumulative Explained Variance (%)', fontsize=15)
+        fig = plt.savefig('./figures/pcaSaturationLiver'+self.imgType, dpi=600, bbox_inches='tight')
+        plt.close(fig)
+        
+        dX_all_sorted_mouse = pd.read_csv('./datasets/data_deng_sorted.csv', index_col=0) 
+        X_all_sorted_mouse = dX_all_sorted_mouse.values
+        pca = PCA(n_components=200)
+        pca.fit(X_all_sorted_mouse)
+        
+        # Explained variance ratio and cumulative explained variance
+        explained_variance_ratio = pca.explained_variance_ratio_
+        cumulative_explained_variance = np.cumsum(explained_variance_ratio)
+        plt.plot(range(1, len(cumulative_explained_variance) + 1), cumulative_explained_variance, marker='o', linestyle='-')
+        plt.xlabel('Number of Principal Components', fontsize=15)
+        plt.ylabel('Cumulative Explained Variance (%)', fontsize=15)
+        fig = plt.savefig('./figures/pcaSaturationMouse'+self.imgType, dpi=600, bbox_inches='tight')
+        plt.close(fig)
+        
     def randOfMatrices(self):
         dX_all_sorted_mouse = pd.read_csv('./datasets/data_deng_sorted.csv', index_col=0) 
         X_all_sorted_mouse = dX_all_sorted_mouse.values
@@ -768,7 +807,7 @@ class Helper():
         rank = np.linalg.matrix_rank(self.X_liver)
         print("rank of liver haematopoiesis:", rank)
         rank = np.linalg.matrix_rank(X_all_sorted_mouse)
-        print(X_all_sorted_mouse.shape)
+        #print(X_all_sorted_mouse.shape)
         print("rank of mouse embryonic:", rank)
         
     def rateZeroEntries(self):

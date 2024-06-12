@@ -21,7 +21,9 @@ hpr.generateSubplotsFigure5()
 
 hpr.generateSubplotsFigure6()
 
-hpr.generateBlockDatasetsFigures()
+hpr.generateSupplementaryFigure1()
+
+hpr.generateSupplementaryFigure2()
 
 hpr.generateSupplementaryFigure3()
 
@@ -36,3 +38,7 @@ hpr.generateSupplementaryFigure7()
 hpr.generateSupplementaryFigure8()
 
 hpr.generateSupplementaryFigure9()
+
+hpr.randOfMatrices()
+
+hpr.rateZeroEntries()
